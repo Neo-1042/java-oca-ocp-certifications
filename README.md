@@ -12,4 +12,11 @@
 
 El examen de Java 8 (`1Z0-808`) será retirado el:  
 **30 de noviembre de 2026**, por lo que es recomendable
-enfocarse en versiones más recientes de Java.
+enfocarse en certificaciones de versiones más recientes de Java.
+
+- Para OCA ---> Java 1.8
+- Para OCP ---> JDK 17
+> Alternative: online compilers:
+
+- jdoodle.com
+- onecompiler.com/jshell
