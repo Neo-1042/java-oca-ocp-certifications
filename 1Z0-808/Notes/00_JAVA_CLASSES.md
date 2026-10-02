@@ -20,3 +20,39 @@ public class Student {
     // Getters and setters
 }
 ```
+
+- Comments review `//    /* */`
+- It is possible to have more than one class in one Java file (only one of them is the **top-level class**), however, it is recommended to have only one class per Java file.
+- If you mark the **top-level class** with `public`, then the filename must match the class name.
+- Only one class can be `public` in the same file.
+
+## Basic Names.java Program
+
+```java
+public class Names {
+
+    // Every Java Program begins by executing the main() method
+    // static -> The method belongs to the class, not to any
+    // instance of the class.
+    public static void main(String[] args) {
+        System.out.println("Hello, OCA");
+        System.out.println("First Name: " + args[0]);
+        System.out.println("Last Name: " + args[1]);
+    }
+    
+    // This syntax is also permissible
+    // static public void main(String sillyName[]) { }
+}
+```
+
+## Compile the program:
+
+```bash
+cd /Users/RRHG/projects/Names
+# Compile the main class:
+javac Names.java # Generates the Names.class
+# Run the program:
+java Names Rodrigo Hurtado
+
+# If args[] does not match, then -> IndexOutOfBoundsException
+```
