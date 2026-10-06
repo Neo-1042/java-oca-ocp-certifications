@@ -58,3 +58,53 @@ java Names Rodrigo Hurtado
 ```
 
 # Java Objects
+
+```java
+private String firstName;
+
+private String lastName;
+// If you don't generate any constructor, the compiler will
+// generate a simple no-argument constructor:
+public Student() { }
+
+public Student(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+}
+// Calling the constructor to create a new object:
+Student s = new Student("Rodrigo", "Hurtado");
+
+// Setters and Getters
+```
+
+# Order of Initialization
+
+- `{...}` code block.
+- Instance initializer ---> code block outside the method.
+- Order of Initialization:
+    1. **Fields** and **instance initializer blocks** in the order in which they appear.
+    2. Constructor runs.
+
+```java
+public class Dog {
+
+    private String name = "Chip";
+
+    // 2
+    public Dog() {
+        this.name = "Teddy";
+        System.out.println("Inside the constructor...");
+    }
+
+    {
+        // Initializer block (1)
+        System.out.println("Inside the initializer block");
+    }
+
+    public static void main(String[] args) {
+        // "Inside the initializer block"
+        Dog dog = new Dog(); // When this code is run, "Teddy"
+        System.out.println(dog.name); // (3) "Teddy"
+    }
+}
+```
