@@ -53,3 +53,39 @@ Variables can go out of scope, that is, "cease to exist":
 2. *Method Parameters*: in scope during the execution of the method.
 3. *Instance Variables*: in scope declaration until the object is eligible for the garbage collector.
 4. *Class Variables*: in scope from declaration until the program ends.
+
+# LVTI = Local Variable Type Inference (Java 10)
+
+This feature can only be used with local variables. LVTI means that the type of the variable is inferred by the compiler.
+
+**`var`** is NOT a reserved word (for backwards compatibility).
+
+```java
+public void lVTIDemo() {
+    var a = 5; // the compiler assumes 'int'
+    // This type will stay the same for the variable's scope.
+    // var s = null; // compilation error
+    var var = 10; // Is possible.
+
+
+    // LVTI does not work for method parameters
+}
+```
+
+## LVTI Examples
+
+```java
+// old way
+SomeClassWithLongName myInstance = new SomeClassWithLongName();
+
+// new way
+var myInstance = new SomeClassWithLongName();
+
+// old way
+ClientList<Client> clientList = new SomeClassWithVeryLongName().getClientList();
+
+// new way: gets the proper type without looking it up.
+var clientList = new SomeClassWithVeryLongName().getClientList();
+```
+
+Personal Note: I don't love this feature; you are trading off readability for convenience.
