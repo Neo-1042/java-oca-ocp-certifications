@@ -99,3 +99,72 @@ short result = x+y; // ERROR, INCOMPATIBLE TYPES.
 System.out.println(x+y);
 // x and y are promoted to int, the result is thus an int.
 ```
+
+# Assignment Operator
+
+The assignment operator (`=`) has the lowest precedence.
+
+- Auto-casting: Java automatically promotes smaller to larger data types when performing operations.
+
+```java
+short x = 5;
+int y;
+y = x; // OK, x is automatically casted into int.
+
+int a = 5;
+short b;
+b = a; // ERROR. a short variable cannot be assigned to an int variable.
+
+// SOLUTION: Explicit cast
+b = (short) a; // OK
+
+// int x = 1.0; // ERROR
+// int y = 123L; // ERROR
+long z = 5; // OK. int -> long
+long w = (byte) 7; // OK. byte -> long
+// float k = 2.3; // ERROR. double -> float WRONG
+float k = 2.3f; // OK
+float m = 3.7f; // OK
+double pi = 3.141592; // OK
+////////////////////////////////////////////////////
+short a = 7:
+short b = 5;
+// short c = a+b; // Wrong. int -> short
+short c = (short) (a+b); // OK
+```
+
+## Compound Assignment Operators
+
+```java
+a += 5; // a = a + 5;
+a -= 5; // a = a - 5;
+a *= 5; // a = a * 5;
+a /= 5; // a = a / 5;
+```
+
+# Return Value of the Assignment Operator
+
+- The expression `a = 10;` does two things:
+    - Assigns the value `10` to the variable `a`.
+    - Returns the value `10` (to the program execution).
+
+## Exam Tricky Examples:
+
+```java
+int x = 5;
+int y = (x = 3) * 2; // 3*2, y ==> 6
+```
+
+```java
+// Favorite exam trick
+
+boolean isOK = false;
+if (isOK = true) {
+    System.out.println("A"); // THIS IS THE RESULT
+} else {
+    System.out.println("B");
+}
+
+System.out.println("The value that is stored in 'isOK' is --> " + isOK);
+// isOK is assigned to true and the output of this logical evaluation is "true". Thus, "A" is printed
+```
