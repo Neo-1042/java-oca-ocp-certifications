@@ -168,3 +168,51 @@ if (isOK = true) {
 System.out.println("The value that is stored in 'isOK' is --> " + isOK);
 // isOK is assigned to true and the output of this logical evaluation is "true". Thus, "A" is printed
 ```
+
+# Comparison Operators
+
+Return a boolean value.
+
+- Equals operator (`a == b`).
+    - For primitives: returns `true` iff values are the same
+    - For objects: returns `true` iff both variables reference to the same object.
+
+- You can only compare values of compatible type (auto-casting considered).
+
+```java
+String name1 = new String("John");
+String name2 = new String("John");
+String name3 = name1;
+
+System.out.println(name1 == name2); // FALSE
+System.out.println(name1 == name3); // TRUE
+System.out.println(null == null); // TRUE (by convention)
+```
+
+## `instanceof`
+
+```java
+public class MyApp {
+
+    public static void isInteger(Number num) {
+
+        // Integer is a subtype of Number
+        if (num instanceof Integer) {
+            System.out.println(num + " is an integer.");
+        } else {
+            System.out.println(num + " is not an integer.");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        isInteger(5);
+        isInteger(3.14);
+    }
+}
+```
+
+`System.out.println(null instanceof Object); // FALSE`
+
+`System.out.println(null instanceof null); // Compilation Error`
+
