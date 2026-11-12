@@ -216,3 +216,33 @@ public class MyApp {
 
 `System.out.println(null instanceof null); // Compilation Error`
 
+# Logical Operators
+
+```java
+// AND -> a & b
+// OR -> a | b
+// XOR -> a^b
+```
+
+# Conditional Operators (Short-circuit)
+
+<u>**Conditional evaluation stops once the result can be determined.**</u>
+
+```java
+// AND -> a && b
+// OR -> a || b
+```
+
+### Examples
+
+```java
+// The ternary operator also has the short-circuit property
+int a = 5;
+int b = 10;
+int c = 15;
+
+// Short-circuit: ternary operator
+int d = (a < b) ? 7 : ++c; // ++c is never evaluated
+int d = (a > b) ? ++c : 7 // ++c is never evaluated
+System.out.println("d = " + d + "; c = " + c);
+```
