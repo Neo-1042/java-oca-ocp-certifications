@@ -36,3 +36,80 @@ public class OpticalDriveController {
     // Hardware control methods, such as "activateBlueLaser()" would be defined down here.
 }
 ```
+
+# Switch Case: Disc Recognition and Laser Calibration
+
+- Pattern Matching
+
+Here is how a Java 21+ program might handle disc recognition and laser calibration:
+
+```java
+// Define what kinds of physical media our player understands (Sealed hierarchy)
+public sealed interface Disc permits BluRay, DVD, CD, BlankDisc {}
+
+record BluRay(int capacityGB, boolean isDualLayer) implements Disc {}
+record DVD(boolean isDoubleSided) implements Disc {}
+record CD() implements Disc {}
+record BlankDisc() implements Disc {}
+
+public class AdvancedOpticalDrive {
+
+    public void configureDrive(Disc disc) {
+
+        // Modern Java Switch Expression with Pattern Matching
+        String status = switch (disc) {
+
+            case BluRay b when b.isDualLayer() -> {
+                activateBlueLaser(405);
+                setMotorSpeed(12000);
+                yield "Dual-Layer Blu-Ray: High Capacity HD mode active";
+            }
+            // Check for a standard Single-Layer Blu-Ray
+            case BluRay b -> {
+                activateBlueLaser(405);
+                setMotorSpeed(10000);
+                yield "Standard Blu-Ray: HD mode active.";
+            }
+            // Check for double-sided DVDs:
+            case DVD d when d.isDoubleSided() -> {
+                activateRedLaser(650);
+                setMotorSpeed(6000);
+                yield "Double-sided DVD: Standard video mode active";
+            }
+            case DVD d -> {
+                activateRedLaser(650);
+                setMotorSpeed(5000);
+                yield "Standard DVD: Video mode active";
+            }
+            case CD c -> {
+                activateInfraredLaser(780);
+                setMotorSpeed(2000);
+                yield "CD: Audio playback mode active.";
+            }
+            case BlankDisc b -> {
+                turnOffLasers();
+                setMotorSpeed(0);
+                yield "Blank disc detected. Ready for burning.";
+            }
+            // Safe handling for null values or completely unknown objects
+            case null, default -> {
+                turnOffLasers();
+                stopMotor();
+                yield "Error: Unrecognized or corrupted media format";
+            }
+        };
+
+        System.out.println(status);
+    }
+
+    // Hardware control STUB
+    // Un 'stub' es un módulo de código temporal y simplificada que simula el comportamiento de un dispositivo físico.
+    // Se usan para desarrollo y pruebas cuando el hardware real aún no está disponible
+    private void activateBlueLaser(int nm) {}
+    private void activateRedLaser(int nm) {}
+    private void activateInfraredLaser(int nm) {}
+    private void setMotorSpeed(int rpm) {}
+    private void stopMotor() {}
+    private void turnOffLasers() {}
+}
+```
