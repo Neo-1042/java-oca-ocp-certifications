@@ -113,3 +113,22 @@ public class AdvancedOpticalDrive {
     private void turnOffLasers() {}
 }
 ```
+
+## Modern Java 21+ Features
+
+- **Sealed Interfaces and Records** --> These define rigid data structures. A `Disc` can only be one of the explicitly permitted types (`Blu-Ray`, `DVD`, `CD`, `BlankDisc`), keeping the hardware logic secure and predictable.
+
+- **Pattern Matching in `switch`** --> Instead of checking primitive numbers, Java directly inspects the **type** of the disc object (`case BluRay b`). It automatically extracts the object into a variable (`b`) so you can inspect its internal properties instantly.
+
+- **The `when` Guard** --> These act as secondary filters. For example, `case BluRay b when b.isDualLayer()` means: "Match this branch only if it's a Blu-Ray and its dual-layer property is true."
+
+- **Arrow Syntax (`->`) and `yield`** --> Modern switch blocks use arrows to avoid the old bug of "fall-through" (where code accidentally leaked into the next case). The `yield` keyword sends a resulting text string out of the code block directly into the `status` variable.
+
+- **Safe `null` Handling**: older Java switches would crash with a `NullPointerException` if you passed a `null` object. Java 21 allows you to combine `case null, default` cleanly to handle empty tray slots or missing data safely.
+
+### "Fall-through" `switch`
+
+In older Java, C, C++ and JavaScript, the `switch` statement acts like a multi-lane highway without stop signs.
+By default, once Java finds a matching `case`, it executes that code and then keeps sliding straight down into every subsequent case until it finally hits a `break;` statement or the end of the block. This is known as `fall-through`.
+
+This bugs is presented whenever `break;` statements are not properly written or not written at all.
