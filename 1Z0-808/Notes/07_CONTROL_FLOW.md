@@ -132,3 +132,81 @@ In older Java, C, C++ and JavaScript, the `switch` statement acts like a multi-l
 By default, once Java finds a matching `case`, it executes that code and then keeps sliding straight down into every subsequent case until it finally hits a `break;` statement or the end of the block. This is known as `fall-through`.
 
 This bugs is presented whenever `break;` statements are not properly written or not written at all.
+
+\* Note: the `switch` statement does NOT allow: `boolean`, `long`, `float` or `double`. It does allow `enum`.
+
+### Java 13 and older:
+
+```java
+// Combining values (before Java 14)
+public void greet(int a) {
+
+    switch(a) {
+        case 0:
+        case 1:
+            System.out.println("Good afternoon");
+            break;
+        case 2:
+            System.out.println("Good evening");
+            break;
+        case 3: case 5: case 6:
+            System.out.println("Cases in the same line");
+        default:
+            System.out.println("Hello, user");
+            break;
+    }
+}
+```
+
+- Slight improvement in the `switch` syntax (not yet the `switch` expression):
+
+```java
+// Java 8
+switch(a) {
+    case 0:
+    case 1:
+    case 2:
+        System.out.println("Good day");
+        break;
+    case 3:
+    case 4:
+        System.out.println("Hi");
+        break;
+    default:
+        System.out.println("Hello");
+        break;
+}
+
+// Java 17+
+switch(a) {
+    case 0, 1, 2:
+        System.out.println("Good day");
+        break;
+    case 3, 4:
+        System.out.println("Hi");
+        break;
+    default:
+        System.out.println("Hello");
+        break;    
+}
+```
+
+# Switch Expressions [OCP, Java 17+]
+
+The most important improvement in Java 17 for this subject is that the `switch` statement can be treated as an **expression**.
+
+```java
+// Preferred syntax in Java 17:
+// '->' instead of ';' and there is no need for the 'break' statement
+
+String greeting = switch(a) {
+                    case 0, 1, 2 -> "Good day, sir";
+                    case 3, 4 -> {
+                        "Hello, Neo.";
+                        isTheOne.setTrue();
+                    }
+                    default -> "Default greetings, user."
+                };
+
+System.out.println(greeting);
+```
