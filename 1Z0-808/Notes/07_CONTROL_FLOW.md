@@ -126,12 +126,12 @@ public class AdvancedOpticalDrive {
 
 - **Safe `null` Handling**: older Java switches would crash with a `NullPointerException` if you passed a `null` object. Java 21 allows you to combine `case null, default` cleanly to handle empty tray slots or missing data safely.
 
-### "Fall-through" `switch`
+### "Fall-through" `switch` bug
 
 In older Java, C, C++ and JavaScript, the `switch` statement acts like a multi-lane highway without stop signs.
 By default, once Java finds a matching `case`, it executes that code and then keeps sliding straight down into every subsequent case until it finally hits a `break;` statement or the end of the block. This is known as `fall-through`.
 
-This bugs is presented whenever `break;` statements are not properly written or not written at all.
+This bug is presented whenever `break;` statements are not properly written or not written at all.
 
 \* Note: the `switch` statement does NOT allow: `boolean`, `long`, `float` or `double`. It does allow `enum`.
 
@@ -193,6 +193,8 @@ switch(a) {
 
 # Switch Expressions [OCP, Java 17+]
 
+The `switch` **expression** obliges you to consider all the possible cases. Hence, you must (practically) always include the `default -> "default return value";` case.
+
 The most important improvement in Java 17 for this subject is that the `switch` statement can be treated as an **expression**.
 
 ```java
@@ -202,11 +204,68 @@ The most important improvement in Java 17 for this subject is that the `switch` 
 String greeting = switch(a) {
                     case 0, 1, 2 -> "Good day, sir";
                     case 3, 4 -> {
-                        "Hello, Neo.";
+                        yield "Hello, Neo.";
                         isTheOne.setTrue();
                     }
                     default -> "Default greetings, user."
                 };
 
 System.out.println(greeting);
+```
+
+# `yield`
+
+The `yield` keyword is similar to the return statement in methods.
+
+```java
+int a = 1;
+
+String greeting = switch(a) {
+                    case 0, 1, 2 -> {
+                        String str1 = "Good";
+                        String str2 = " day";
+                        yield str1 + str2;
+                    }
+                    case 3, 4 -> "Hi";
+                    default -> "Hello";
+                };
+```
+
+\* The `switch` **expression** can return different value types:
+
+```java
+public void greet(int a) {
+
+    // Local Variable Type Inference = LVTI
+    // The type of 'var' will be determined at RUNTIME.
+    var printOut = switch(a) {
+
+        case 0 -> "Gus mornin";
+        case 1 -> 7;
+        case 2 -> true;
+        default -> 3.14;
+    }
+}
+```
+
+When using `enum`, you can actually just **list all the possible values in the `switch` expression.
+
+## `enum` + `switch`
+
+```java
+enum Compass { NORTH, SOUTH, EAST, WEST }
+
+String getDirection(Compass value) {
+
+    return switch(value) {
+
+        case NORTH -> "up";
+        case SOUTH -> "down";
+        case EAST  -> "right";
+        case WEST  -> "left";
+        // Since we've listed all the possible values, there is no need to write the default case.
+    };
+}
+
+System.out.println(Compass.SOUTH);
 ```
